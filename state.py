@@ -156,19 +156,3 @@ class SokobanProblem:
                     chars.append(" ")
             output_rows.append("".join(chars))
         return "\n".join(output_rows)
-
-
-# if __name__ == "__main__":
-#     # Test thử đọc map
-#     map_obj = SokobanMap("example_map.txt")
-#     problem = SokobanProblem(map_obj)
-#     print("=== MAP THÔNG TIN ===")
-#     print(f"Kích thước: {map_obj.rows} hàng x {map_obj.cols} cột")
-#     print(f"Vị trí Agent: {map_obj.initial_agent}")
-#     print(f"Số lượng hộp (Boxes): {len(map_obj.initial_boxes)}")
-#     print(f"Số lượng đích (Goals): {len(map_obj.goals)}")
-#     print("\nTrạng thái ban đầu:\n" + problem.to_string(problem.initial_state))
-
-#     print("\nCác nước đi hợp lệ đầu tiên:")
-#     for act, next_st, cost in problem.get_successors(problem.initial_state):
-#         print(f" - Hành động '{act}': Agent chuyển sang {next_st.agent}, chi phí = {cost}")
