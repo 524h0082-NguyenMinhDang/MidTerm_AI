@@ -79,9 +79,9 @@ class SokobanGUI:
 
     def solve(self):
         if self.algo == "UCS":
-            self.res = uniform_cost_search(self.problem)
+            self.res = uniform_cost_search(self.problem, max_expanded=100000)
         else:
-            self.res = a_star_search(self.problem, heuristic_fn=self.heuristic.compute)
+            self.res = a_star_search(self.problem, heuristic_fn=self.heuristic.compute, max_expanded=100000)
 
         if self.res.success and self.res.states:
             self.sol_states = self.res.states
@@ -181,7 +181,7 @@ class SokobanGUI:
         if self.step == 3 and self.res:
             lines = [
                 f"Algorithm: {self.algo}",
-                f"Status: {'Success' if self.res.success else 'No Solution'}",
+                f"Status: {'Success' if self.res.success else 'Limit Reached'}",
                 f"Search Time: {self.res.execution_time_ms:.1f} ms",
                 f"Expanded Nodes: {self.res.expanded_nodes}",
                 f"Total Steps: {max(0, len(self.sol_states) - 1)}",

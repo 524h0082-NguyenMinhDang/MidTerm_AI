@@ -1,16 +1,8 @@
-"""
-heuristics.py - Các hàm Heuristic cho bài toán Sokoban.
-
-LƯU Ý THEO ĐỀ BÀI:
-- KHÔNG ĐƯỢC DÙNG khoảng cách Manhattan và Euclidean.
-- Giải pháp: BFS Maze Distance (Khoảng cách đường đi ngắn nhất thực tế trên lưới tránh vật cản).
-- Kết hợp bài toán gán cặp cực tiểu (Min-Weight Bipartite Matching) giữa các hộp và các điểm đích.
-- Tính chất:
-  + Admissible (chấp nhận được): h(n) <= h*(n) vì mỗi hộp phải đến một đích riêng biệt, và đường đi thực tế
-    của hộp không thể ngắn hơn khoảng cách ngắn nhất trên mê cung.
-  + Consistent (nhất quán): h(n) <= c(n, a, n') + h(n') theo bất đẳng thức tam giác trên đồ thị khoảng cách.
-- Bổ sung kiểm tra Deadlock (góc tường chết): nếu hộp bị đẩy vào góc không phải đích, h = vô cùng.
-"""
+# - Tính chất:
+#   + Admissible (chấp nhận được): h(n) <= h*(n) vì mỗi hộp phải đến một đích riêng biệt, và đường đi thực tế
+#     của hộp không thể ngắn hơn khoảng cách ngắn nhất trên mê cung.
+#   + Consistent (nhất quán): h(n) <= c(n, a, n') + h(n') theo bất đẳng thức tam giác trên đồ thị khoảng cách.
+# - Bổ sung kiểm tra Deadlock (góc tường chết): nếu hộp bị đẩy vào góc không phải đích, h = vô cùng.
 
 from collections import deque
 from typing import Dict, Tuple, Set, List
@@ -22,7 +14,6 @@ class MazeDistanceHeuristic:
     Tính heuristic dựa trên BFS Maze Distance (khoảng cách thực tế trên bản đồ, tránh tường)
     kết hợp với thuật toán gán cặp tối ưu (Min-Weight Matching) giữa hộp và đích.
     """
-
     def __init__(self, map_data: SokobanMap):
         self.map = map_data
         self.deadlocks = self._identify_corner_deadlocks()

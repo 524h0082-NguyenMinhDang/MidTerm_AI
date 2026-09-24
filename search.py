@@ -1,11 +1,6 @@
-"""
-search.py - Cài đặt giải thuật Uniform Cost Search (UCS) và A* Search.
-
-Đặc điểm:
-- Cấu trúc Graph Search để tránh duyệt lại các trạng thái đã xét.
-- Sử dụng Priority Queue (heapq) có bộ đếm tự tăng để tránh so sánh trực tiếp các đối tượng State.
-- Ghi nhận chi tiết: thời gian thực thi (ms), số node đã mở (expanded_nodes), tổng chi phí (cost).
-"""
+# Đặc điểm:
+#     Cấu trúc Graph Search để tránh duyệt lại các trạng thái đã xét.
+#     Sử dụng Priority Queue (heapq) có bộ đếm tự tăng để tránh so sánh trực tiếp các đối tượng State.
 
 import heapq
 import time
@@ -15,8 +10,6 @@ from heuristics import MazeDistanceHeuristic
 
 
 class SearchResult:
-    """Lưu trữ kết quả và các chỉ số đo đạc của thuật toán tìm kiếm."""
-
     def __init__(self,
                  actions: Optional[List[str]],
                  states: Optional[List[SokobanState]],
@@ -65,7 +58,7 @@ def reconstruct_path(node: SearchNode) -> Tuple[List[str], List[SokobanState]]:
     return actions, states
 
 
-def uniform_cost_search(problem: SokobanProblem, max_expanded: Optional[int] = None) -> SearchResult:
+def uniform_cost_search(problem: SokobanProblem, max_expanded: int = 300000) -> SearchResult:
     """
     Thuật toán Uniform Cost Search (UCS).
     Độ ưu tiên trong hàng đợi là g(n) (chi phí tích lũy từ gốc đến n).
@@ -98,7 +91,7 @@ def uniform_cost_search(problem: SokobanProblem, max_expanded: Optional[int] = N
             actions, states = reconstruct_path(current_node)
             return SearchResult(actions, states, current_node.g_cost, expanded_nodes, generated_nodes, elapsed, "UCS")
 
-        if max_expanded is not None and expanded_nodes >= max_expanded:
+        if expanded_nodes >= max_expanded:
             break
 
         for action, next_state, step_cost in problem.get_successors(current_node.state):
@@ -117,7 +110,7 @@ def uniform_cost_search(problem: SokobanProblem, max_expanded: Optional[int] = N
 
 def a_star_search(problem: SokobanProblem,
                   heuristic_fn: Optional[Callable[[SokobanState], float]] = None,
-                  max_expanded: Optional[int] = None) -> SearchResult:
+                  max_expanded: int = 300000) -> SearchResult:
     """
     Thuật toán A* Search.
     Độ ưu tiên trong hàng đợi là f(n) = g(n) + h(n).
@@ -159,7 +152,7 @@ def a_star_search(problem: SokobanProblem,
             actions, states = reconstruct_path(current_node)
             return SearchResult(actions, states, current_node.g_cost, expanded_nodes, generated_nodes, elapsed, "A*")
 
-        if max_expanded is not None and expanded_nodes >= max_expanded:
+        if expanded_nodes >= max_expanded:
             break
 
         for action, next_state, step_cost in problem.get_successors(current_node.state):
