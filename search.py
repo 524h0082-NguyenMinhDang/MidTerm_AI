@@ -59,10 +59,6 @@ def reconstruct_path(node: SearchNode) -> Tuple[List[str], List[SokobanState]]:
 
 
 def uniform_cost_search(problem: SokobanProblem, max_expanded: int = 300000) -> SearchResult:
-    """
-    Thuật toán Uniform Cost Search (UCS).
-    Độ ưu tiên trong hàng đợi là g(n) (chi phí tích lũy từ gốc đến n).
-    """
     start_time = time.perf_counter()
 
     initial_node = SearchNode(state=problem.initial_state, g_cost=0)
@@ -111,10 +107,7 @@ def uniform_cost_search(problem: SokobanProblem, max_expanded: int = 300000) -> 
 def a_star_search(problem: SokobanProblem,
                   heuristic_fn: Optional[Callable[[SokobanState], float]] = None,
                   max_expanded: int = 300000) -> SearchResult:
-    """
-    Thuật toán A* Search.
-    Độ ưu tiên trong hàng đợi là f(n) = g(n) + h(n).
-    """
+
     start_time = time.perf_counter()
 
     if heuristic_fn is None:
