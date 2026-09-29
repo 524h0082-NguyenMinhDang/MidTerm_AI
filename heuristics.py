@@ -21,10 +21,7 @@ class MazeDistanceHeuristic:
         self._precompute_maze_distances()
 
     def _identify_corner_deadlocks(self) -> Set[Tuple[int, int]]:
-        """
-        Tìm các ô góc chết (Deadlock): Ô không phải đích và bị kẹp giữa 2 tường vuông góc.
-        Nếu một chiếc hộp bị đẩy vào đây, nó sẽ vĩnh viễn không bao giờ ra được.
-        """
+        # tìm deadlock (gốc chết)
         deadlocks = set()
         for r in range(self.map.rows):
             for c in range(self.map.cols):
@@ -74,11 +71,10 @@ class MazeDistanceHeuristic:
             self.dist_to_goal[goal] = dist_map
 
     def get_maze_dist(self, pos: Tuple[int, int], goal: Tuple[int, int]) -> int:
-        """Lấy khoảng cách thực tế trên mê cung từ ô pos đến điểm đích goal."""
+        # Lấy khoảng cách thực tế trên mê cung từ ô pos đến điểm đích goal.
         return self.dist_to_goal.get(goal, {}).get(pos, 999999)
 
     def is_deadlock(self, boxes: Set[Tuple[int, int]]) -> bool:
-        """Kiểm tra xem có bất kỳ hộp nào đang nằm ở góc chết (không phải đích) không."""
         for box in boxes:
             if box in self.deadlocks:
                 return True
@@ -114,10 +110,6 @@ class MazeDistanceHeuristic:
         return float(total_dist)
 
     def _min_weight_matching(self, cost_matrix: List[List[int]], n: int, m: int) -> int:
-        """
-        Giải bài toán gán cặp cực tiểu giữa n hộp và m đích (n <= m).
-        Cài đặt thuật toán Hungarian thuần Python tối ưu cho n <= 10.
-        """
         if n == 0 or m == 0:
             return 0
 

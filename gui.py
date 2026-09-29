@@ -196,7 +196,6 @@ class SokobanGUI:
             self.r_fwd = pygame.Rect(x + 238, y + 10, 108, 32)
             self.draw_btn(self.r_back, "Prev", enabled=(self.step_idx > 0))
 
-            # Xác định chữ trên nút Play: chỉ hiện "Play Again" sau khi đã chạy xong lần đầu
             if not self.has_finished_first_run:
                 play_text = "Pause" if not self.paused else "Play"
             else:
@@ -222,7 +221,6 @@ class SokobanGUI:
                 if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
                     running = False
 
-                # 100% Mouse-driven interaction
                 if ev.type == pygame.MOUSEBUTTONDOWN and ev.button == 1:
                     # Step 1 clicks
                     if self.step == 1:

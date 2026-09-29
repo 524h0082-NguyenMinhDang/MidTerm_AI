@@ -29,8 +29,6 @@ class SearchResult:
 
 
 class SearchNode:
-    """Nút trong cây tìm kiếm."""
-
     def __init__(self,
                  state: SokobanState,
                  parent: Optional["SearchNode"] = None,
@@ -43,7 +41,7 @@ class SearchNode:
 
 
 def reconstruct_path(node: SearchNode) -> Tuple[List[str], List[SokobanState]]:
-    """Truy vết ngược từ Goal Node về Root Node để lấy chuỗi hành động và danh sách trạng thái."""
+    # Truy vết ngược từ Goal Node về Root Node để lấy chuỗi hành động và danh sách trạng thái.
     actions = []
     states = []
     curr = node

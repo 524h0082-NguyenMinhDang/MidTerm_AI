@@ -9,7 +9,7 @@ if sys.stdout.encoding != "utf-8":
 
 
 class SokobanMap:
-    """Chứa thông tin tĩnh của bản đồ (kích thước, tường, vị trí đích)."""
+    # thông tin tĩnh của bản đồ
 
     def __init__(self, filepath: str):
         self.filepath = filepath
@@ -40,7 +40,6 @@ class SokobanMap:
                 elif ch == "B":
                     self.initial_boxes.add((r, c))
                 elif ch == "C":
-                    # C là hộp đang nằm sẵn trên điểm đích
                     self.goals.add((r, c))
                     self.initial_boxes.add((r, c))
                 elif ch == " ":
@@ -54,7 +53,7 @@ class SokobanMap:
 
 
 class SokobanState:
-    """Biểu diễn trạng thái động của game: vị trí Agent và tập vị trí các Hộp."""
+    # Biểu diễn trạng thái động của game: vị trí Agent và tập vị trí các Hộp
 
     __slots__ = ("agent", "boxes", "_hash")
 
@@ -76,7 +75,7 @@ class SokobanState:
 
 
 class SokobanProblem:
-    """Mô hình hóa bài toán tìm kiếm không gian trạng thái (State-Space Search)."""
+    # Mô hình hóa bài toán tìm kiếm không gian trạng thái
 
     ACTIONS = {
         "North": (-1, 0),
@@ -93,15 +92,13 @@ class SokobanProblem:
         )
 
     def is_goal(self, state: SokobanState) -> bool:
-        """Kiểm tra điều kiện đích: tất cả các vị trí đích đều có hộp hoặc tất cả hộp đã vào đích."""
+        # Kiểm tra điều kiện đích: tất cả các vị trí đích đều có hộp hoặc tất cả hộp đã vào đích.
         # Mỗi hộp phải nằm ở một vị trí đích
         return state.boxes.issubset(self.map.goals)
 
     def get_successors(self, state: SokobanState) -> List[Tuple[str, SokobanState, int]]:
-        """
-        Sinh các trạng thái kế tiếp.
-        Trả về danh sách các tuple: (action_name, next_state, step_cost).
-        """
+        # Sinh các trạng thái kế tiếp.
+        # Trả về danh sách các tuple: (action_name, next_state, step_cost).
         successors: List[Tuple[str, SokobanState, int]] = []
         ar, ac = state.agent
 
@@ -136,7 +133,7 @@ class SokobanProblem:
         return successors
 
     def to_string(self, state: SokobanState) -> str:
-        """Vẽ lại trạng thái hiện tại dưới dạng chuỗi ký tự."""
+        # Vẽ lại trạng thái hiện tại dưới dạng chuỗi ký tự
         output_rows = []
         for r in range(self.map.rows):
             chars = []
