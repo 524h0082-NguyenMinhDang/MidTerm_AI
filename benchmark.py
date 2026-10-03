@@ -125,6 +125,6 @@ def verify_admissibility_and_consistency(map_path: str = "map/simple_map.txt", n
 
 
 if __name__ == "__main__":
-    maps = ["map/simple_map.txt", "map/final_map.txt"]
+    maps = ["map/5.txt", "map/6.txt", "map/7.txt", "map/8.txt","map/9.txt", "map/final_map.txt"]
     run_benchmark(maps)
-    verify_admissibility_and_consistency("map/simple_map.txt", num_samples=15)
+    verify_admissibility_and_consistency("map/6.txt", num_samples=15)

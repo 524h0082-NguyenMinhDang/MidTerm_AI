@@ -208,6 +208,10 @@ class SokobanGUI:
 
             self.draw_btn(self.r_play, play_text, active=(not self.paused or play_text == "Play Again"))
             self.draw_btn(self.r_fwd, "Next", enabled=(self.step_idx < len(self.sol_states) - 1))
+
+            # Keyboard shortcut hints
+            hint = FONT.render("Keys: Space=Play/Pause  \u2190=Prev  \u2192=Next", True, MUTED_TEXT)
+            self.screen.blit(hint, (x, y + 50))
         else:
             self.screen.blit(FONT.render("Complete Step 1 and 2 to view results...", True, MUTED_TEXT), (x, y))
 
@@ -221,6 +225,25 @@ class SokobanGUI:
                 if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE):
                     running = False
 
+                # Keyboard controls (Step 3 only)
+                if ev.type == pygame.KEYDOWN and self.step == 3 and self.res:
+                    if ev.key == pygame.K_SPACE:
+                        if self.step_idx >= len(self.sol_states) - 1:
+                            self.step_idx = 0
+                            self.state = self.sol_states[0]
+                            self.paused = False
+                        else:
+                            self.paused = not self.paused
+                    elif ev.key == pygame.K_LEFT and self.step_idx > 0:
+                        self.step_idx -= 1
+                        self.state = self.sol_states[self.step_idx]
+                        self.paused = True
+                    elif ev.key == pygame.K_RIGHT and self.step_idx < len(self.sol_states) - 1:
+                        self.step_idx += 1
+                        self.state = self.sol_states[self.step_idx]
+                        self.paused = True
+
+                # Mouse controls
                 if ev.type == pygame.MOUSEBUTTONDOWN and ev.button == 1:
                     # Step 1 clicks
                     if self.step == 1:
